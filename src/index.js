@@ -8,7 +8,7 @@ const port = process.env.PORT;
 const hostname = process.env.HOSTNAME;
 app.use(cors())
 
-app.get("/courses", (req, res) => {
+app.get("/", (req, res) => {
   const courses = [
     {
       id: 1,
