@@ -1,6 +1,9 @@
 import express from "express";
 import cors from 'cors';
 import dotenv from 'dotenv';
+import axios from 'axios'
+import users from "./MOCK_DATA.json" assert { type: "json" };
+
 dotenv.config();
 
 const app = express();
@@ -33,10 +36,38 @@ app.get("/", (req, res) => {
   ];
   res.send(courses);
 });
+app.get('/books', async(req,res)=>{
+const response= await axios.get("https://jsonplaceholder.typicode.com/posts")
+res.json(response.data)
+})
+// app.get('/users',(req,res)=>{
+//   const html=`
+//   <ul>
+//   ${users.map(user=>`<li>${user.first_name}</li>`).join("")}
+//   </ul>
+//   `
+//   res.send(html);
+// });
+// app.get("/api/users", (req, res) => {
+//   return res.json(users)
+// });
+//get with id
+app.route("/api/users/:id").get((req,res)=>{
+  const id=Number(req.params.id)
+  const user=users.find((user)=>user.id===id);
+  return res.json(user);
+})
 
-app.get("/services", (req, res) => {
-    res.send('welcome to service page');
-});
+
+.post((req,res)=>{
+  return res.json({status:'pending'})
+})
+.patch((req,res)=>{
+  return res.json({status:'pending'})
+})
+app.delete((req,res)=>{
+  return res.json({status:"pending"})
+})
 app.listen(port, () => {
   console.log(`server is running on http://${hostname}:${port}`);
 });
